@@ -1,21 +1,26 @@
+        <!--  Путь где находится XML схема документа, xmlns -> указывает на мавен -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- Версия модели pom файла -->
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
+    <!-- Название проекта -->
     <artifactId>my-test-project</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <!-- Свойства проекта (версия джавы) и кодировка -->
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!-- Зваисимости / внешние библиотеки -->
     <dependencies>
-        <!-- ✅ JUnit 5 -->
+        <!--  JUnit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -23,21 +28,21 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- ✅ Selenium WebDriver -->
+        <!--  Selenium WebDriver -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.21.0</version>
+            <version>4.34.0</version>
         </dependency>
 
-        <!-- ✅ Allure -->
+        <!--  Allure -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
             <version>2.27.0</version>
         </dependency>
 
-        <!-- ✅ Lombok -->
+        <!--  Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -45,11 +50,26 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- ✅ ChromeDriver -->
+        <!--  ChromeDriver -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.7.0</version>
+            <version>6.2.0</version>
+        </dependency>
+
+        <!--  LogBack (система логирования) -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.5.11</version> <!-- актуальная версия -->
+        </dependency>
+
+        <!--  TestNG (система для SoftAssert) -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.10.1</version> <!-- или последняя -->
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -58,7 +78,8 @@
 
     <build>
         <plugins>
-            <!-- ✅ Surefire Plugin for running JUnit 5 -->
+            <!--  Surefire Plugin for running JUnit 5 -->
+            <!-- Для запуска JUnit тестов используется этот плагин -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -68,7 +89,8 @@
                 </configuration>
             </plugin>
 
-            <!-- ✅ Allure Report Plugin -->
+            <!--  Allure Report Plugin -->
+            <!-- для отчетности по автотестам, работает по HTML -->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>

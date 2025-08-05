@@ -108,16 +108,23 @@ public class BrowserSwitchTest {
     }
 
     private static void exampleLoginTest(WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         long start = System.currentTimeMillis();
-        driver.get("https://example.com");
+        driver.get("https://rozetka.com.ua");
 
-        // Здесь можно добавить базовую проверку наличия элементов
-        assertTrue(driver.getTitle().toLowerCase().contains("example"));
-        assertTrue(driver.getCurrentUrl().contains("example.com"));
+        WebElement submitButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("button.search-form__submit")));
+        assertEquals(" Знайти ", submitButton.getText(), "Wrong Submit button text (text does not match)");
+
+         //Здесь можно добавить базовую проверку наличия элементов
+        assertTrue(driver.getTitle().contains("Інтернет-магазин ROZETKA™: офіційний сайт онлайн-гіпермаркету Розетка в Україні"));
+        assertTrue(driver.getCurrentUrl().contains("https://rozetka.com.ua/"));
+        assertNotNull(driver.getTitle(), "Title is NULL");
+        assertEquals("Інтернет-магазин ROZETKA™: офіційний сайт онлайн-гіпермаркету Розетка в Україні",
+                driver.getTitle(), "Page title does not match");
+        assertEquals("https://rozetka.com.ua/", driver.getCurrentUrl(), "Incorrect URL");
 
         long end = System.currentTimeMillis();
-        System.out.println("Время загрузки example.com: " + (end - start) + " мс");
+        System.out.println("Время загрузки rozetka.com.ua: " + (end - start) + " мс");
     }
 
     private static void googleLoginTest(WebDriver driver) {
@@ -125,10 +132,10 @@ public class BrowserSwitchTest {
         driver.get("https://www.google.com");
 
         //Проверяем наличие логотипа Google
-        //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img[alt='Google']")));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img[alt='Google']")));
 
-        //assertTrue(driver.getTitle().toLowerCase().contains("google"));
+        assertTrue(driver.getTitle().toLowerCase().contains("google"));
 
         long end = System.currentTimeMillis();
         System.out.println("Время загрузки google.com: " + (end - start) + " мс");
