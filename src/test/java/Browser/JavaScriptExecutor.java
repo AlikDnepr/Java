@@ -6,7 +6,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -19,12 +18,11 @@ public class JavaScriptExecutor {
             driver.get("https://novaposhta.ua");
             driver.manage().window().maximize();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
             JavascriptExecutor js = (JavascriptExecutor) driver;
 
             scrollPageDown(js);
-            selectСountry(js, driver);
+            selectCountry(js, driver);
             scrollPageUp(js);
             fillSearchField(js, driver);
 
@@ -63,16 +61,18 @@ public class JavaScriptExecutor {
         Thread.sleep(5000);
     }
 
-    public static void selectСountry(JavascriptExecutor js, WebDriver driver) throws InterruptedException {
+    public static void selectCountry(JavascriptExecutor js, WebDriver driver) throws InterruptedException {
         WebElement button = driver.findElement(By.cssSelector("#app-footer > div > div:nth-child(2) > " +
-                "div.flex.justify-between.items-center.l-xl\\:items-start.mt-10.gap-7.l-lg\\:flex-col-reverse.l-lg\\:items-start > div.flex.gap-8.items-center.l-md\\:flex-col.l-md\\:items-start > div > button"));
+                "div.flex.justify-between.items-center.l-xl\\:items-start.mt-10.gap-7.l-lg\\:flex-col-reverse.l-lg\\:" +
+                "items-start > div.flex.gap-8.items-center.l-md\\:flex-col.l-md\\:items-start > div > button"));
         js.executeScript("arguments[0].style.border='3px solid blue'", button);
         Thread.sleep(2000);
         js.executeScript("arguments[0].click();", button);
         Thread.sleep(2000);
 
         WebElement close = driver.findElement(By.cssSelector("#app-footer > div > div:nth-child(2) > div.flex." +
-                "justify-between.items-center.l-xl\\:items-start.mt-10.gap-7.l-lg\\:flex-col-reverse.l-lg\\:items-start > div.flex.gap-8.items-center.l-md\\:flex-col.l-md\\:items-start > div > div > " +
+                "justify-between.items-center.l-xl\\:items-start.mt-10.gap-7.l-lg\\:flex-col-reverse.l-lg\\:items-start " +
+                "> div.flex.gap-8.items-center.l-md\\:flex-col.l-md\\:items-start > div > div > " +
                 "div > div.modal-content-wrapper.relative.z-10.max-h-\\[100\\%\\].h-full.max-w-\\[100vw\\].w-full." +
                 "flex.justify-center.pointer-events-none > div > div > div.absolute.right-\\[1\\.65rem\\].top-\\[1\\." +
                 "35rem\\].l-md\\:right-\\[0\\.8rem\\].l-md\\:top-\\[1\\.22rem\\] > button"));
