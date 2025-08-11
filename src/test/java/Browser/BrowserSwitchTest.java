@@ -65,7 +65,7 @@ public class BrowserSwitchTest {
                 WebDriverManager.edgedriver().setup();
                 return new EdgeDriver();
             case 4:
-                return new SafariDriver(); // Safari не требует setup
+                return new SafariDriver(); // Safari doesn't require setup
             default:
                 return null;
         }
@@ -104,7 +104,7 @@ public class BrowserSwitchTest {
         logoutButton.click();
 
         long end = System.currentTimeMillis();
-        System.out.println("Время логина (herokuapp): " + (end - start) + " мс");
+        System.out.println("Log in time (herokuapp): " + (end - start) + " мс");
     }
 
     private static void exampleLoginTest(WebDriver driver) {
@@ -131,7 +131,7 @@ public class BrowserSwitchTest {
         long start = System.currentTimeMillis();
         driver.get("https://www.google.com");
 
-        //Проверяем наличие логотипа Google
+        //Checking for the Google logo
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img[alt='Google']")));
 

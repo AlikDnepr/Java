@@ -12,15 +12,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class LoginTest {
     @Test
     public void GoogleTest(){
-        WebDriverManager.chromedriver().setup(); // библиотека WebDriverManager, которая автоматически загружает и настраивает нужную версию ChromeDriver (и других драйверов), подходящую для твоего браузера.
-        //System.setProperty("webdriver.chrome.driver","drivers/chromedriver"); //"/drivers/chromedriver/" почитать как можно оптимизаровать эту строку Хроме драйвер сетап
+        WebDriverManager.chromedriver().setup();
+        //System.setProperty("webdriver.chrome.driver","drivers/chromedriver"); //"/drivers/chromedriver/" Specifying the path to the driver on the local machine
         WebDriver driver = new ChromeDriver();
-        driver.get("https://the-internet.herokuapp.com/login"); // Відкриває сторінку логіну
+        driver.get("https://the-internet.herokuapp.com/login");
 
-        WebElement usernameField = driver.findElement(By.id("username")); //Находим элемент по id
-        usernameField.sendKeys("tomsmith"); //Вводить у поле логіну: tomsmith
-        WebElement passwordField = driver.findElement(By.name("password")); //Находим элемент по id
-        passwordField.sendKeys("SuperSecretPassword!"); //Вводить у поле пассворд: SuperSecretPassword!
+        WebElement usernameField = driver.findElement(By.id("username"));
+        usernameField.sendKeys("tomsmith");
+        WebElement passwordField = driver.findElement(By.name("password"));
+        passwordField.sendKeys("SuperSecretPassword!");
 
         WebElement loginButton = driver.findElement(By.cssSelector("button[type='submit']"));
         loginButton.click();

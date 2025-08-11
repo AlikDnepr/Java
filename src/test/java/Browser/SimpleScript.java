@@ -18,12 +18,12 @@ public class SimpleScript {
     public void Test() {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
-        // Проверяем домейн пейджу
+
         driver.get("https://example.com");
         System.out.println("Site is opened:" + " " +  driver.getCurrentUrl());
-        // Проверяем h1
+
         WebElement element = driver.findElement(By.tagName("h1"));
-        System.out.println("Заголовок найден: " + element.getText()); // element.getText() - заменяет идентификатор на значение элемента!!!
+        System.out.println("Заголовок найден: " + element.getText()); // element.getText() - replaces the identifier with the element value!!!
 
         //assertTrue(driver.getCurrentUrl().contains("https://example.com/"));
         String expTitle = driver.getTitle();

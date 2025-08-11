@@ -2,21 +2,20 @@ package Code;
 
 import java.util.List;
 
-public class Task1 {
+public class CompareStringLengthAndNumber {
     public static void main(String[] args) {
         //1 - two variables, string and float, compare who is bigger [size]
         //2 - student - 10 subjects[Math - 10], average score  - 11.1, 10.5
-        //второй способ через приведение типов
 
         String name = "Maxim";
         float number = 12345;
         float sizeName = name.length();
 
         if (sizeName > number){
-            System.out.println("Переменная name больше");
+            System.out.println("Variable name bigger");
         }
         else {
-            System.out.println("Переменная number больше");
+            System.out.println("Variable number less");
         }
 
         List<String> subjects = List.of("Math - 10", "Physics - 10", "Chemistry - 3", "Biology - 7", "English - 5",

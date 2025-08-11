@@ -8,6 +8,4 @@ public class NumberStr {
         String number = new String(String.valueOf(numberInt));
         System.out.println(number);
     }
-
-    // как проверить тип переменной в 17 версии джавы (красивый способ) в более высоких через instanceof
 }
