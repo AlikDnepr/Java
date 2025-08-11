@@ -24,6 +24,7 @@ public class EmailFilter {
         for (String email : emails) {
             String fixed = toLowerCase(email);
             fixed = fixDoubleAt(fixed);
+            fixed = removeForbiddenChars(fixed);
             fixed = addMissingAt(fixed);
             fixed = fixDomainTypos(fixed);
             fixed = replaceRuWithUa(fixed);
@@ -40,6 +41,9 @@ public class EmailFilter {
 
     static String toLowerCase(String email) {
         return email.toLowerCase();
+    }
+    static String removeForbiddenChars(String email) {
+        return email.replaceAll("[^a-zA-Z0-9.@]", "");
     }
 
     static String fixDoubleAt(String email) {
@@ -83,11 +87,11 @@ public class EmailFilter {
         String localPart = parts[0];
         String domainPart = parts[1];
 
-        if (domainPart.contains("ex") && !domainPart.equals("example.com")) { return localPart + "@example.com"; }
-        if (domainPart.contains("gm") && !domainPart.equals("gmail.com")) { return localPart + "@gmail.com"; }
-        if (domainPart.contains("ol") && !domainPart.equals("outlook.com")) { return localPart + "@outlook.com"; }
-        if (domainPart.contains("yx") && !domainPart.equals("yandex.ru")) { return localPart + "@yandex.ru"; }
-        if (domainPart.contains("ma") && !domainPart.equals("mail.ru")) { return localPart + "@mail.ru"; }
+        if (domainPart.contains("e") && domainPart.contains("x")  && !domainPart.equals("example.com")) { return localPart + "@example.com"; }
+        if (domainPart.contains("g") && domainPart.contains("m")  && !domainPart.equals("gmail.com")) { return localPart + "@gmail.com"; }
+        if (domainPart.contains("o") && domainPart.contains("l")  && !domainPart.equals("outlook.com")) { return localPart + "@outlook.com"; }
+        if (domainPart.contains("y") && domainPart.contains("x")  && !domainPart.equals("yandex.ru")) { return localPart + "@yandex.ru"; }
+        if (domainPart.contains("m") && domainPart.contains("a")  && !domainPart.equals("mail.ru")) { return localPart + "@mail.ru"; }
 
         return email;
     }
