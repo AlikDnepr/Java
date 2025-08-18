@@ -1,4 +1,4 @@
-        <!--  Путь где находится XML схема документа, xmlns -> указывает на мавен -->
+<!--  Путь где находится XML схема документа, xmlns -> указывает на мавен -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.34.0</version>
+            <version>4.35.0</version>
         </dependency>
 
         <!--  Allure -->
