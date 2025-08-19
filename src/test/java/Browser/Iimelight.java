@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class Iimelight {
     public static void main(String[] args) {
@@ -19,7 +20,7 @@ public class Iimelight {
 
         try {
             getAdministrationPage(js,driver);
-            getCheckBoxes(driver);
+            getCheckBoxes(driver,js);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,14 +72,24 @@ public class Iimelight {
         administration.click();
         Thread.sleep(5000);
     }
-    public static void getCheckBoxes(WebDriver driver) {
-        WebElement[] checkboxes = new WebElement[driver.findElements(By.cssSelector("input[data-ll='default-checkbox-input']")).size()];
-        System.out.println("Найдено чекбоксов: " + checkboxes.length);
+    public static void getCheckBoxes(WebDriver driver,JavascriptExecutor js) throws InterruptedException {
+        //WebElement[] checkboxes = new WebElement[driver.findElements(By.xpath("//tr[@data-item-id]//input[@data-ll='default-checkbox-input']")).size()];
+        List<WebElement> checkboxes = driver.findElements(
+                By.xpath("//tr[@data-item-id]//input[@data-ll='default-checkbox-input']"));
+        System.out.println("Найдено чекбоксов: " + checkboxes.size());
         for (WebElement checkbox : checkboxes) {
             WebElement row = checkbox.findElement(By.xpath("./ancestor::tr"));
+            js.executeScript("arguments[0].style.border='3px solid magenta'", checkbox);
+            checkbox.click();
+            Thread.sleep(500);
+            //System.out.println(row.getText());
             String id = row.getAttribute("data-item-id");
             System.out.println("Checkbox с id: " + id);
         }
-
+        WebElement mainCheckBox = driver.findElement(By.cssSelector("#ll-panel-body > div:nth-child(2) > div > table >" +
+                " thead > tr > th.select-all > div > input"));
+        js.executeScript("arguments[0].style.border='3px solid black'", mainCheckBox);
+        mainCheckBox.click();
+        Thread.sleep(3000);
     }
 }
