@@ -5,7 +5,7 @@ public class EmailFilter {
 
     public static void main(String[] args) {
         String[] emails = new String[20];
-        System.out.println("Emails до исправления: ");
+        System.out.println("Emails before corrections: ");
         for (int i = 0; i < emails.length; i++) {
             emails[i] = RandomCharFromSet() + DoubleAt() + RandomArrayElement();
             System.out.println(emails[i]);
@@ -29,30 +29,66 @@ public class EmailFilter {
             }
         }
 
-        System.out.println("\nИсправленные emails:");
+        System.out.println("\nCorrected emails:");
         for (String corrected : correctedEmails) {
             System.out.println(corrected);
         }
     }
 
+    /**
+     * Converts the email address to lowercase.
+     * @param email The original email address.
+     * @return Email address in lowercase.
+     */
     static String toLowerCase(String email) {
         return email.toLowerCase();
     }
+
+    /**
+     * Removes forbidden characters from the email address.
+     * @param email The original email address.
+     * @return Email address with forbidden characters removed.
+     */
     static String removeForbiddenChars(String email) {
         return email.replaceAll("[^a-zA-Z0-9.@]", "");
     }
+
+    /**
+     * Fixes multiple `@` symbols in the email address.
+     * @param email The original email address.
+     * @return Email address with a single `@`.
+     */
     static String fixDoubleAt(String email) {
         return email.replaceAll("@{2,}", "@");
     }
+
+    /**
+     * Fixes multiple dots `..` in the email address.
+     * @param email The original email address.
+     * @return Email address with corrected dots.
+     */
     static String fixDoubleDot(String email) {
         return email.replaceAll("\\.{2,}", ".");
     }
+
+    /**
+     * Replaces the domain `.ru` with `.ua`.
+     * @param email The original email address.
+     * @return Email address with domain `.ru` replaced by `.ua`.
+     */
     static String replaceRuWithUa(String email) {
         if (email.endsWith(".ru")) {
             return email.substring(0, email.length() - 3) + ".ua";
         }
         return email;
     }
+
+    /**
+     * Adds the `@` symbol if it is missing in the email address.
+     * Attempts to infer a correct domain.
+     * @param email The original email address.
+     * @return Email address with the added `@` if possible.
+     */
     static String addMissingAt(String email) {
         if (!email.contains("@")) {
             String[] domains = {"example.com", "gmail.com", "outlook.com", "yandex.ru", "mail.ru"};
@@ -65,6 +101,12 @@ public class EmailFilter {
         }
         return email;
     }
+
+    /**
+     * Fixes typos in the domain part of the email address.
+     * @param email The original email address.
+     * @return Email address with corrected domain.
+     */
     static String fixDomainTypos(String email) {
         if (!email.contains("@")) return email;
         String[] parts = email.split("@", 2);
@@ -80,15 +122,24 @@ public class EmailFilter {
         return email;
     }
 
+    /**
+     * Generates a random domain from a predefined list.
+     * @return A random domain.
+     */
     static String RandomArrayElement() {
         String[] domains = {"example.com", "gmail.com", "outlook.com", "yandex.ru", "mail.ru"};
         Random random = new Random();
         return domains[random.nextInt(domains.length)];
     }
+
+    /**
+     * Generates a random name (local part) for an email address.
+     * @return A randomly generated string of characters.
+     */
     static StringBuilder RandomCharFromSet() {
         String symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
         Random random = new Random();
-        int length = random.nextInt(15) + 1;
+        int length = random.nextInt(10) + 1;
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < length; i++) {
             char randomChar = symbols.charAt(random.nextInt(symbols.length()));
@@ -96,11 +147,22 @@ public class EmailFilter {
         }
         return result;
     }
+
+    /**
+     * Generates one to three `@` symbols.
+     * @return A string containing one, two, or three `@`.
+     */
     static String DoubleAt() {
         Random random = new Random();
         return "@".repeat(random.nextInt(3) + 1);
     }
 
+    /**
+     * Validates the email address.
+     * A valid email must match a specific regex pattern.
+     * @param email The email address to validate.
+     * @return `true` if the email is valid, otherwise `false`.
+     */
     static boolean isValidEmail(String email) {
         return email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
     }

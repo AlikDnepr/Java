@@ -21,11 +21,10 @@ public class JavaScriptExecutor {
 
             JavascriptExecutor js = (JavascriptExecutor) driver;
 
-            scrollPageDown(js);
-            selectCountry(js, driver);
-            scrollPageUp(js);
-            fillSearchField(js, driver);
-
+            scrollPageDown(js);      // Method to scroll down the page
+            selectCountry(js, driver); // Method to interact with the country selection modal
+            scrollPageUp(js);        // Method to scroll up the page
+            fillSearchField(js, driver); // Method to fill out the search field
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,15 +33,32 @@ public class JavaScriptExecutor {
         }
     }
 
+    /**
+     * Scrolls the page down to the bottom using JavaScript.
+     * @param js The JavascriptExecutor object for executing JavaScript code.
+     * @throws InterruptedException Handles thread sleep interruptions.
+     */
     public static void scrollPageDown(JavascriptExecutor js) throws InterruptedException {
         js.executeScript("window.scrollBy(0, document.body.scrollHeight);");
         Thread.sleep(1000);
     }
+
+    /**
+     * Scrolls the page back to the top using JavaScript.
+     * @param js The JavascriptExecutor object for executing JavaScript code.
+     * @throws InterruptedException Handles thread sleep interruptions.
+     */
     public static void scrollPageUp(JavascriptExecutor js) throws InterruptedException {
         js.executeScript("window.scrollBy(0, -document.body.scrollHeight);");
         Thread.sleep(1000);
     }
 
+    /**
+     * Fills the search field on the page using JavaScript and triggers the relevant DOM events.
+     * @param js The JavascriptExecutor object for executing JavaScript code.
+     * @param driver The WebDriver instance for browser automation.
+     * @throws InterruptedException Handles thread sleep interruptions.
+     */
     public static void fillSearchField(JavascriptExecutor js, WebDriver driver) throws InterruptedException {
         WebElement search = driver.findElement(By.cssSelector("#main-page-search > div.np-input.w-full.h-full > label > div > input"));
         js.executeScript("arguments[0].style.border='3px solid blue'", search);
@@ -53,6 +69,7 @@ public class JavaScriptExecutor {
                 search
         );
         Thread.sleep(2000);
+
         WebElement findButton = driver.findElement(By.cssSelector("#__nuxt > div > main > div > section > div >" +
                 " div.relative.z-1.h-full.app-container.flex.items-center > div > div.mt-10.flex.gap-3.l-lg-mid\\:flex-col > button"));
         js.executeScript("arguments[0].style.border='3px solid green'", findButton);
@@ -61,6 +78,12 @@ public class JavaScriptExecutor {
         Thread.sleep(5000);
     }
 
+    /**
+     * Interacts with the country selection modal, including opening the modal and closing it using JavaScript.
+     * @param js The JavascriptExecutor object for executing JavaScript code.
+     * @param driver The WebDriver instance for browser automation.
+     * @throws InterruptedException Handles thread sleep interruptions.
+     */
     public static void selectCountry(JavascriptExecutor js, WebDriver driver) throws InterruptedException {
         WebElement button = driver.findElement(By.cssSelector("#app-footer > div > div:nth-child(2) > " +
                 "div.flex.justify-between.items-center.l-xl\\:items-start.mt-10.gap-7.l-lg\\:flex-col-reverse.l-lg\\:" +
@@ -82,4 +105,3 @@ public class JavaScriptExecutor {
         Thread.sleep(2000);
     }
 }
-
