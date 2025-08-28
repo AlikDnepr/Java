@@ -1,9 +1,12 @@
 package Code;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class EmailFilter {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         String[] emails = new String[20];
         System.out.println("Emails before corrections: ");
         for (int i = 0; i < emails.length; i++) {
@@ -33,10 +36,13 @@ public class EmailFilter {
         for (String corrected : correctedEmails) {
             System.out.println(corrected);
         }
+
+        exportToTextFile("outputFile.txt", emails, correctedEmails);
     }
 
     /**
      * Converts the email address to lowercase.
+     *
      * @param email The original email address.
      * @return Email address in lowercase.
      */
@@ -46,6 +52,7 @@ public class EmailFilter {
 
     /**
      * Removes forbidden characters from the email address.
+     *
      * @param email The original email address.
      * @return Email address with forbidden characters removed.
      */
@@ -55,6 +62,7 @@ public class EmailFilter {
 
     /**
      * Fixes multiple `@` symbols in the email address.
+     *
      * @param email The original email address.
      * @return Email address with a single `@`.
      */
@@ -64,6 +72,7 @@ public class EmailFilter {
 
     /**
      * Fixes multiple dots `..` in the email address.
+     *
      * @param email The original email address.
      * @return Email address with corrected dots.
      */
@@ -73,6 +82,7 @@ public class EmailFilter {
 
     /**
      * Replaces the domain `.ru` with `.ua`.
+     *
      * @param email The original email address.
      * @return Email address with domain `.ru` replaced by `.ua`.
      */
@@ -86,6 +96,7 @@ public class EmailFilter {
     /**
      * Adds the `@` symbol if it is missing in the email address.
      * Attempts to infer a correct domain.
+     *
      * @param email The original email address.
      * @return Email address with the added `@` if possible.
      */
@@ -104,6 +115,7 @@ public class EmailFilter {
 
     /**
      * Fixes typos in the domain part of the email address.
+     *
      * @param email The original email address.
      * @return Email address with corrected domain.
      */
@@ -113,17 +125,23 @@ public class EmailFilter {
         String localPart = parts[0];
         String domainPart = parts[1];
 
-        if (domainPart.contains("e") && domainPart.contains("x") && !domainPart.equals("example.com")) return localPart + "@example.com";
-        if (domainPart.contains("g") && domainPart.contains("m") && !domainPart.equals("gmail.com")) return localPart + "@gmail.com";
-        if (domainPart.contains("o") && domainPart.contains("l") && !domainPart.equals("outlook.com")) return localPart + "@outlook.com";
-        if (domainPart.contains("y") && domainPart.contains("x") && !domainPart.equals("yandex.ru")) return localPart + "@yandex.ru";
-        if (domainPart.contains("m") && domainPart.contains("a") && !domainPart.equals("mail.ru")) return localPart + "@mail.ru";
+        if (domainPart.contains("e") && domainPart.contains("x") && !domainPart.equals("example.com"))
+            return localPart + "@example.com";
+        if (domainPart.contains("g") && domainPart.contains("m") && !domainPart.equals("gmail.com"))
+            return localPart + "@gmail.com";
+        if (domainPart.contains("o") && domainPart.contains("l") && !domainPart.equals("outlook.com"))
+            return localPart + "@outlook.com";
+        if (domainPart.contains("y") && domainPart.contains("x") && !domainPart.equals("yandex.ru"))
+            return localPart + "@yandex.ru";
+        if (domainPart.contains("m") && domainPart.contains("a") && !domainPart.equals("mail.ru"))
+            return localPart + "@mail.ru";
 
         return email;
     }
 
     /**
      * Generates a random domain from a predefined list.
+     *
      * @return A random domain.
      */
     static String RandomArrayElement() {
@@ -134,6 +152,7 @@ public class EmailFilter {
 
     /**
      * Generates a random name (local part) for an email address.
+     *
      * @return A randomly generated string of characters.
      */
     static StringBuilder RandomCharFromSet() {
@@ -150,6 +169,7 @@ public class EmailFilter {
 
     /**
      * Generates one to three `@` symbols.
+     *
      * @return A string containing one, two, or three `@`.
      */
     static String DoubleAt() {
@@ -160,10 +180,35 @@ public class EmailFilter {
     /**
      * Validates the email address.
      * A valid email must match a specific regex pattern.
+     *
      * @param email The email address to validate.
      * @return `true` if the email is valid, otherwise `false`.
      */
     static boolean isValidEmail(String email) {
         return email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+    }
+
+    public static void exportToTextFile(String filename, String[] emails, List<String> data) throws IOException {
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(filename));
+            writer.write("* * * Emails before corrections: * * *");
+            writer.newLine();
+            for (String email : emails) {
+                writer.write(email);
+                writer.newLine();
+            }
+            writer.write("\n* * * Corrected emails: * * *");
+            writer.newLine();
+            for (String email : data) {
+                writer.write(email);
+                writer.newLine();
+            }
+        }
+        finally {
+            if (writer != null) {
+                writer.close();
+            }
+        }
     }
 }

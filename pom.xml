@@ -72,6 +72,19 @@
             <scope>test</scope>
         </dependency>
 
+        <!--  apache.poi (для работы с Excel файлами -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.5</version>
+        </dependency>
+        <!--  logging.log4j (для логированния с Excel файлами -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.20.0</version>
+        </dependency>
+
     </dependencies>
 
 

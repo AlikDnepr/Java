@@ -19,8 +19,11 @@ public class Iimelight {
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         try {
+            float start = System.nanoTime();
             getAdministrationPage(js, driver); // Method to handle login and navigate to the Administration page
             getCheckBoxes(driver, js);         // Method to find and interact with checkboxes on the Administration page
+            float end = System.nanoTime();
+            System.out.println("Work time (seconds): " + ((end - start) / 1000000000) );
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -87,25 +90,36 @@ public class Iimelight {
      * @throws InterruptedException Handles thread sleep interruptions.
      **/
     public static void getCheckBoxes(WebDriver driver, JavascriptExecutor js) throws InterruptedException {
-        List<WebElement> checkboxes = driver.findElements(
-                By.xpath("//tr[@data-item-id]//input[@data-ll='default-checkbox-input']"));
-        System.out.println("Найдено чекбоксов: " + checkboxes.size());
+        while (true) {
+            List<WebElement> checkboxes = driver.findElements(
+                    By.xpath("//tr[@data-item-id]//input[@data-ll='default-checkbox-input']"));
+            System.out.println("Найдено чекбоксов: " + checkboxes.size());
 
-        for (WebElement checkbox : checkboxes) {
-            WebElement row = checkbox.findElement(By.xpath("./ancestor::tr"));
-            WebElement textElement = row.findElement(By.cssSelector("p.m-0.text-start"));
-            js.executeScript("arguments[0].style.border='3px solid magenta'", checkbox);
-            checkbox.click();
-            Thread.sleep(500);
-            String id = row.getAttribute("data-item-id");
-            String name = textElement.getText();
-            System.out.println("Checkbox с id: " + id + ", Name: " + name);
+            for (WebElement checkbox : checkboxes) {
+                WebElement row = checkbox.findElement(By.xpath("./ancestor::tr"));
+                WebElement textElement = row.findElement(By.cssSelector("p.m-0.text-start"));
+                js.executeScript("arguments[0].style.border='3px solid magenta'", checkbox);
+                checkbox.click();
+                Thread.sleep(500);
+                String id = row.getAttribute("data-item-id");
+                String name = textElement.getText();
+                System.out.println("Checkbox с id: " + id + ", Name: " + name);
+            }
+
+            WebElement mainCheckBox = driver.findElement(By.cssSelector("#ll-panel-body > div:nth-child(2) > div > table >" +
+                    " thead > tr > th.select-all > div > input"));
+            js.executeScript("arguments[0].style.border='3px solid black'", mainCheckBox);
+            mainCheckBox.click();
+            Thread.sleep(3000);
+
+            try {
+                WebElement nextPageButton = driver.findElement(By.cssSelector("Ничего не подходит что сюда можно впихнуть"));
+                js.executeScript("arguments[0].style.border='3px solid magenta'", nextPageButton);
+                js.executeScript("arguments[0].click();", nextPageButton); // Кликаем для перехода
+                Thread.sleep(3000); // Ждём загрузки следующей страницы
+            } catch (ExceptionInInitializerError e) {
+                break;
+            }
         }
-
-        WebElement mainCheckBox = driver.findElement(By.cssSelector("#ll-panel-body > div:nth-child(2) > div > table >" +
-                " thead > tr > th.select-all > div > input"));
-        js.executeScript("arguments[0].style.border='3px solid black'", mainCheckBox);
-        mainCheckBox.click();
-        Thread.sleep(3000);
     }
 }
